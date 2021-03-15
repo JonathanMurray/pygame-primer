@@ -100,8 +100,8 @@ How come it's blue? We passed in the tuple
 the screen can be defined by how much of the three colors red (R), green (G), and blue (B)
 that it contains. In our case, we set red and green to 0 and blue to 255 which is the max value. Wait, 255 is the max
 value? Why couldn't we put 256 or something higher? If we try, we'll be greeted by this error
-message: `ValueError: invalid color argument`. The reason we can't go over 255 is that each color is represented by a _
-byte_ of data. A byte (which is the same as 8 bits) can express at most 256 (2^8) values and as we're including 0 the
+message: `ValueError: invalid color argument`. The reason we can't go over 255 is that each color is represented by a
+_byte_ of data. A byte (which is the same as 8 bits) can express at most 256 (2^8) values and as we're including 0 the
 max value will be 255.
 
 So we have a blue window now, but there's a glaring flaw with our window. If you try to close it with the button in the
