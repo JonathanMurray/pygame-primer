@@ -10,10 +10,10 @@ general. More experienced readers may want to skip ahead to later chapters.
 ### 1.1 Installing Pygame
 
 To be able to use Pygame, you first have to install it. Like most any other Python packages, it can be installed
-with `pip`:
+with `pip` (or commonly `pip3` if you are using Python3, which you should probably be doing):
 
 ```bash
-pip3 -r requirements.txt
+pip3 install pygame
 ```
 
 Check that Pygame is properly installed with the following Python code:
@@ -27,7 +27,7 @@ print(pygame.version.ver)
 You should see output similar to `2.0.0.dev10`.
 
 From now on, when we show code-examples, we'll assume that you have `import pygame` at the top of the file, and we'll
-leave it out for brevity's sake.
+often leave it out for brevity's sake.
 
 ### 1.2 Launching a window
 
@@ -57,6 +57,7 @@ place the call inside the loop-body (as we'll see later when we want to do more 
 If you've followed along so far, you should have code that looks like this:
 
 ```python
+import pygame
 size = (640, 480)
 pygame.display.set_mode(size)
 
@@ -73,6 +74,7 @@ more on this later). To fill our window with a color, we need a surface that rep
 turns out that the `set_mode` function returns exactly this! Let's get hold the surface and start painting!
 
 ```python
+import pygame
 size = (640, 480)
 screen = pygame.display.set_mode(size)
 screen.fill((0, 0, 255))  # fill the screen with color
