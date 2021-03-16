@@ -66,16 +66,11 @@ while True:
 
 ![Alt text](01-getting-started/screenshots/window.png?raw=true)
 
-Yay, we have a window! But why does it look so weird?
+Yay, we have a window!
 
-When we run our program, there is a section of the computer's memory that's storing the pixels that are drawn to our
-window object. However, we haven't told Pygame to draw anything so whatever data was in this part of the computer's
-memory from the start is what will be shown in our window. That's no good! Let's tell Pygame to fill the entire window
-with a background color!
-
-In Pygame, graphics are always handled with the `Surface` class (more on this later). To fill our window with a color,
-we need a surface that represents the window! We're in luck. It turns out that the `set_mode` function returns exactly
-this! Let's get hold the surface and start painting!
+But what if we want to change the background color? In Pygame, graphics are always handled with the `Surface` class (
+more on this later). To fill our window with a color, we need a surface that represents the window! We're in luck. It
+turns out that the `set_mode` function returns exactly this! Let's get hold the surface and start painting!
 
 ```python
 size = (640, 480)
