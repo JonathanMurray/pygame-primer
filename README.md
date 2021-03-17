@@ -5,7 +5,9 @@ or _"learning Pygame the hard way"_
 ## 1. Getting started
 
 This chapter is mainly geared toward readers with little or no experience with Pygame and/or software development in
-general. More experienced readers may want to skip ahead to later chapters.
+general. More experienced readers may want to skip ahead to later chapters. Also remember to check out the
+official [Pygame documentation](https://www.pygame.org/docs/) for a reference of what specific packages and functions
+do!
 
 ### 1.1 Installing Pygame
 
@@ -27,7 +29,7 @@ print(pygame.version.ver)
 You should see output similar to `2.0.0.dev10`.
 
 From now on, when we show code-examples, we'll assume that you have `import pygame` at the top of the file, and we'll
-often leave it out for brevity's sake.
+sometimes leave it out (and other imports) for brevity's sake.
 
 ### 1.2 Launching a window
 
@@ -50,14 +52,16 @@ while True:
 ```
 
 Now the program keeps running, but we don't see any window! It turns out that we need to interact with the event queue
-from Pygame's `event` package for things to get up and running. While you _can_
-simply add a call to `pygame.event.get()` before the while-loop (try it if you want), it probably makes more sense to
-place the call inside the loop-body (as we'll see later when we want to do more things with events).
+from Pygame's `event` package for things to get up and running. While you _can_ simply add a call
+to [pygame.event.get()](https://www.pygame.org/docs/ref/event.html#pygame.event.get) before the while-loop (try it if
+you want), it probably makes more sense to place the call inside the loop-body (as we'll see later when we want to do
+more things with events).
 
 If you've followed along so far, you should have code that looks like this:
 
 ```python
 import pygame
+
 size = (640, 480)
 pygame.display.set_mode(size)
 
@@ -69,12 +73,15 @@ while True:
 
 Yay, we have a window!
 
-But what if we want to change the background color? In Pygame, graphics are always handled with the `Surface` class (
-more on this later). To fill our window with a color, we need a surface that represents the window! We're in luck. It
-turns out that the `set_mode` function returns exactly this! Let's get hold the surface and start painting!
+But what if we want to change the background color? In Pygame, graphics are always handled with
+the [Surface](https://www.pygame.org/docs/ref/surface.html#pygame.Surface) class (more on this later). To fill our
+window with a color, we need a surface that represents the window! We're in luck. It turns out that
+the [set_mode](https://www.pygame.org/docs/ref/display.html#pygame.display.set_mode) function returns exactly this!
+Let's get hold the surface and start painting!
 
 ```python
 import pygame
+
 size = (640, 480)
 screen = pygame.display.set_mode(size)
 screen.fill((0, 0, 255))  # fill the screen with color
@@ -92,11 +99,10 @@ You should now have a window with a blue background!
 
 ![Alt text](01-getting-started/screenshots/blue_window.png?raw=true)
 
-How come it's blue? We passed in the tuple
-`(0, 0, 255)` to the `fill` method. This is an RGB representation of the color blue. Stated very simply, every pixel on
-the screen can be defined by how much of the three colors red (R), green (G), and blue (B)
-that it contains. In our case, we set red and green to 0 and blue to 255 which is the max value. Wait, 255 is the max
-value? Why couldn't we put 256 or something higher? If we try, we'll be greeted by this error
+How come it's blue? We passed in the tuple `(0, 0, 255)` to the `fill` method. This is an RGB representation of the
+color blue. Stated very simply, every pixel on the screen can be defined by how much of the three colors red (R),
+green (G), and blue (B) that it contains. In our case, we set red and green to 0 and blue to 255 which is the max value.
+Wait, 255 is the max value? Why couldn't we put 256 or something higher? If we try, we'll be greeted by this error
 message: `ValueError: invalid color argument`. The reason we can't go over 255 is that each color is represented by a
 _byte_ of data. A byte (which is the same as 8 bits) can express at most 256 (2^8) values and as we're including 0 the
 max value will be 255.
@@ -104,9 +110,8 @@ max value will be 255.
 So we have a blue window now, but there's a glaring flaw with our window. If you try to close it with the button in the
 top corner, nothing happens! We actually need to tell Pygame to stop our program when a user clicks that button. But how
 do we know when a user clicks that button (or does anything for that matter)? Remember that "event queue" we mentioned
-before? That's how!
-The `get` method has been sitting in our while-loop all along, spitting out information about the user's activity. We
-just need to use that information!
+before? That's how! The `get` method has been sitting in our while-loop all along, spitting out information about the
+user's activity. We just need to use that information!
 
 Let's add some code so that our while-loop looks like this:
 
@@ -125,14 +130,13 @@ Here is some example outputs that I get when moving my mouse cursor across the s
 ![Alt text](01-getting-started/screenshots/printed_events.png?raw=true)
 
 Let's try to close our window again, and study the output on the command line carefully. You should see output similar
-to this:
-`[<Event(512-WindowEvent {'event': 14, 'window': None})>, <Event(256-Quit {})>]`
+to this: `[<Event(512-WindowEvent {'event': 14, 'window': None})>, <Event(256-Quit {})>]`
 
 The part that we're particularly interested in is `<Event(256-Quit {})>`. Pygame received an event saying that the user
 has requested to close the window! We just need to listen specifically for this event and take action when we see it!
-One way to check if an event is a "quit"
-event, is to look at its "type" like so: `event.type == pygame.QUIT:`. To shut down our program in a nice way we can
-call Pygame's `quit` method and then call `sys.exit(0)` which is a common way of ending Python programs.
+One way to check if an event is a "quit" event, is to look at its "type" like so: `event.type == pygame.QUIT:`. To shut
+down our program in a nice way we can call Pygame's `quit` method and then call `sys.exit(0)` which is a common way of
+ending Python programs.
 
 Your while-loop should now look like the following:
 
@@ -178,9 +182,9 @@ if event.type == pygame.KEYDOWN:
     print("A key was pressed!")
 ```
 
-But we didn't set out to print messages to the console. We want to change the background color!
-To prepare for this change, we start by detaching our call to `screen.fill` from the blue color
-`(0, 0, 255)`. Update the few lines surrounding `while True` to the following:
+But we didn't set out to print messages to the console. We want to change the background color! To prepare for this
+change, we start by detaching our call to `screen.fill` from the blue color `(0, 0, 255)`. Update the few lines
+surrounding `while True` to the following:
 
 ```python
 colors = [(0, 0, 255), (0, 255, 0), (255, 0, 0)]
@@ -205,14 +209,14 @@ color_index = (color_index + 1) % len(colors)
 That may look complicated, if you aren't familiar with the modulo operator (`%`). What the line is doing is to increment
 our index by one but "looping around" to 0 when it reaches `len(colors)`, which is 3 in our case. It's a good thing that
 we don't allow the index to reach 3. That would make the program crash when we try to use the index. As lists in Python
-are zero-indexed, "index 3"
-is just another way of saying "the fourth element in the list", but we only have 3 elements in our list!
+are zero-indexed, "index 3" is just another way of saying "the fourth element in the list", but we only have 3 elements
+in our list!
 
 If you run the program now, you should see that the background color changes every time you press a key. The complete
 source code can be found [here](01-getting-started/03_changing_graphics.py).
 
-Now that we know how to update our graphics based on input from the user, we can do anything!
-Well, let's not get ahead of ourselves, but we are truly on a good way toward creating a game.
+Now that we know how to update our graphics based on input from the user, we can do anything! Well, let's not get ahead
+of ourselves, but we are truly on a good way toward creating a game.
 
 Next, we'll add an "entity" to our program that can move around on the screen.
 
@@ -227,17 +231,17 @@ boxman_color = (100, 150, 200)
 boxman = Rect(50, 300, 128, 128)
 ```
 
-We're giving our hero a nice light blue color, and then we're creating a new `Rect` instance.
-`Rect` is a class from Pygame that represents a rectangle. The parameters that we pass in specify the rectangle's
-x-position, y-position, width, and height in that order. So we're creating a square that's sitting in the bottom left
-corner of our window (assuming the window size is still 640x480).
+We're giving our hero a nice light blue color, and then we're creating a new `Rect` instance. `Rect` is a class from
+Pygame that represents a rectangle. The parameters that we pass in specify the rectangle's x-position, y-position,
+width, and height in that order. So we're creating a square that's sitting in the bottom left corner of our window
+(assuming the window size is still 640x480).
 
 To draw Boxman, we can add this to our while-loop: `pygame.draw.rect(screen, boxman_color, boxman)`.
-`pygame.draw` is a package that provides code for drawing simple geometrical shapes and lines on a surface. We use
-the `rect` method (short for rectangle) and pass in the surface that we want to draw on, the color that should be used
-for drawing and the rectangle that should be drawn. Make sure to add this method-call immediately after our call
-to `screen.fill`. If we were to fill the screen after Boxman has been rendered, his graphics would be drawn over by our
-background!
+[pygame.draw](https://www.pygame.org/docs/ref/draw.html) is a package that provides code for drawing simple geometrical
+shapes and lines on a surface. We use the `rect` method (short for rectangle) and pass in the surface that we want to
+draw on, the color that should be used for drawing and the rectangle that should be drawn. Make sure to add this
+method-call immediately after our call to `screen.fill`. If we were to fill the screen after Boxman has been rendered,
+his graphics would be drawn over by our background!
 
 We can also remove all the code involved in updating the background color (assuming that's not a feature we want to keep
 around). We might want to hold on the code that listens for key presses though (as we'll connect that to Boxman's
@@ -245,14 +249,15 @@ movement later on). If we replace the key press handling with a print statement 
 looks something like this:
 
 ```python
+import pygame
+import sys
+from pygame.rect import Rect
+
 size = (640, 480)
 screen = pygame.display.set_mode(size)
 boxman_color = (100, 150, 200)
 boxman = Rect(50, 300, 128, 128)
 while True:
-    screen.fill((0, 0, 0))
-    pygame.draw.rect(screen, boxman_color, boxman)
-    pygame.display.update()
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -260,6 +265,11 @@ while True:
             sys.exit(0)
         if event.type == pygame.KEYDOWN:
             print("Move boxman")
+
+    screen.fill((0, 0, 0))
+    pygame.draw.rect(screen, boxman_color, boxman)
+    pygame.display.update()
+
 ```
 
 If you run the program now, you should see our square-shaped hero idling in the bottom-left corner. How to make him move
@@ -275,7 +285,7 @@ ASCII may be an interesting topic, but for now it's enough to know that Pygame h
 on your keyboard. So we could write our program in such a way that we compare `event.key`
 against these codes, but a better idea is to use constants provided by Pygame so that we don't have to memorize all
 these codes. The constant for the `a` key is `pygame.K_a` and the rest of them can usually be guessed easily by their
-name.
+name (or looked up [here](https://www.pygame.org/docs/ref/key.html#key-constants-label)).
 
 Now, let's add code for finding WASD key presses and updating the rectangle's position accordingly:
 
@@ -300,10 +310,11 @@ generate a `KEYUP` event. All that time in between, however, no events are gener
 state is not changing. If we want to keep moving Boxman in the subsequent frames after we pressed down the key, we'll
 need to remember that the key has been pressed down and perform the movement until we get a `KEYUP` event. Luckily,
 there is another way. Pygame already keeps track of all keys that are currently held down. That information is stored in
-a huge list that can be accessed with `pygame.key.get_pressed()`. To find out if a particular key is currently held
-down, we do a lookup in that list using the key's numeric code. For example, to see if A is held down we
-do `pygame.key.get_pressed()[pygame.K_a]`. Let's remove our `KEYDOWN` handling and instead put the following code after
-our event for-loop:
+a huge list that can be accessed with
+[pygame.key.get_pressed()](https://www.pygame.org/docs/ref/key.html#pygame.key.get_pressed). To find out if a particular
+key is currently held down, we do a lookup in that list using the key's numeric code. For example, to see if A is held
+down we do `pygame.key.get_pressed()[pygame.K_a]`. Let's remove our `KEYDOWN` handling and instead put the following
+code after our event for-loop:
 
 ```python
 if pygame.key.get_pressed()[pygame.K_w]:
@@ -328,27 +339,28 @@ how powerful your computer is! We don't have any concept of "time" in our progra
 as it can. When the frame-rate is higher, we'll be running the code inside of our while-loop more frequently so Boxman
 will move faster across the screen. That's generally not what you'd want from a game, so let's try to fix it.
 
-For measuring time, Pygame provides us with a `Clock` class. Let's create a clock instance before entering our while
-loop like so: `clock = Clock()`. Inside the while-loop, we'll do
-`elapsed_time = clock.tick()` to get the number of milliseconds that have passed since the previous frame. We can now
-use this value as a multiplier for our movement and set the distance that Boxman should move according to how much time
-has passed: `boxman.x -= elapsed_time * movement_speed`. However, as we're now multiplying our movement speed with a
-large number (somewhere around 17 if our game runs at 60 FPS), we'll need to set `movement_speed` to some lower value.
-For example, we can set the speed to `0.2` in order to make Boxman move 200 pixels per second
-(0.2 pixels * 1000 ms = 200).
+For measuring time, Pygame's `time` package provides us with a
+[Clock](https://www.pygame.org/docs/ref/time.html#pygame.time.Clock) class. Let's create a clock instance before
+entering our while loop like so: `clock = Clock()`. Inside the while-loop, we'll do `elapsed_time = clock.tick()` to get
+the number of milliseconds that have passed since the previous frame. We can now use this value as a multiplier for our
+movement and set the distance that Boxman should move according to how much time has passed:
+`boxman.x -= elapsed_time * movement_speed`. However, as we're now multiplying our movement speed with a large number
+(somewhere around 17 if our game runs at 60 FPS), we'll need to set `movement_speed` to some lower value. For example,
+we can set the speed to `0.2` in order to make Boxman move 200 pixels per second (0.2 pixels * 1000 ms = 200).
 
-Your code should look similar to the following now:
+Your code should look similar to the following now (with some parts omitted to keep it short):
 
 ```python
+# omitted: other imports
+from pygame.time import Clock
+
+# omitted: setup
+
 movement_speed = 0.2
 clock = Clock()
 while True:
 
-    screen.fill((0, 0, 0))
-    pygame.draw.rect(screen, boxman_color, boxman)
-    pygame.display.update()
-
-    # (quit handling omitted for brevity)
+    # omitted: quit-handling
 
     elapsed_time = clock.tick()
 
@@ -360,6 +372,10 @@ while True:
         boxman.y += elapsed_time * movement_speed
     if pygame.key.get_pressed()[pygame.K_d]:
         boxman.x += elapsed_time * movement_speed
+
+    screen.fill((0, 0, 0))
+    pygame.draw.rect(screen, boxman_color, boxman)
+    pygame.display.update()
 ```
 
 If you run the code now, depending on your frame-rate Boxman's movement may be extremely uneven and jittery. This is
@@ -377,19 +393,19 @@ should look something like this.
 x, y = 50, 300
 boxman = Rect(x, y, 128, 128)
 
-# ...
+# omitted: setup
 
 while True:
-    screen.fill((0, 0, 0))
-    boxman.topleft = (x, y)
-    pygame.draw.rect(screen, boxman_color, boxman)
-
-    # ...
+    
+    # omitted: quit-handling
 
     if pygame.key.get_pressed()[pygame.K_w]:
         y -= elapsed_time * movement_speed
+    # omitted: other keys and directions
 
-    # ...
+    screen.fill((0, 0, 0))
+    boxman.topleft = (x, y)
+    pygame.draw.rect(screen, boxman_color, boxman)
 ```
 
 If you run the program now, you should be able to move Boxman fairly smoothly across the screen. The complete source

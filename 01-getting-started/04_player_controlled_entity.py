@@ -13,13 +13,13 @@ movement_speed = 0.2
 clock = Clock()
 while True:
 
-    # Process Input
+    # Process user input
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit(0)
 
-    # Update
+    # Update game world
     elapsed_time = clock.tick()
     if pygame.key.get_pressed()[pygame.K_w]:
         y -= elapsed_time * movement_speed
@@ -30,7 +30,7 @@ while True:
     if pygame.key.get_pressed()[pygame.K_d]:
         x += elapsed_time * movement_speed
 
-    # Render
+    # Render game world
     screen.fill((0, 0, 0))
     boxman.topleft = (x, y)
     pygame.draw.rect(screen, boxman_color, boxman)
