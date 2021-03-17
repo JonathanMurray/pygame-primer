@@ -396,7 +396,7 @@ boxman = Rect(x, y, 128, 128)
 # omitted: setup
 
 while True:
-    
+
     # omitted: quit-handling
 
     if pygame.key.get_pressed()[pygame.K_w]:
@@ -418,6 +418,37 @@ stick to this 3-step loop (input, update, render), even when the implementation 
 complex. For an *excellent* article on the Game Loop pattern, check
 out [this chapter](https://gameprogrammingpatterns.com/game-loop.html) from the _"Game Programming Patterns"_ e-book!
 
-## 2. Advanced topics
+## 2. Making a small game
 
-TODO
+TODO: pitch the idea of a very simple platformer-type game
+
+### 2.1 Adding obstacles
+
+TODO: start with naive solution, demonstrate how things get messy, introduce the "entity" concept
+
+### 2.2 Collision detection
+
+TODO: start with naive solution, and then improve precision (to make Boxman line up with obstacle after collision)
+
+### 2.3 Adding jumping and gravity
+
+TODO: start with naive solution (only having horizontal collision detection), demonstrate bugs when landing on top of
+obstacle, implement vertical collision detection
+
+### 2.4 Creating the game world
+
+TODO: create a very simple map that includes a deep pit (forcing a restart) and a goal  
+
+### 2.5 Adding graphics
+
+TODO: replace rectangle graphics with loaded images, switch between two images for Boxman depending on direction
+
+### 2.6 Feature ideas
+
+TODO: give suggestions for features that the reader can add, with some brief implementation hints
+
+## 3. Advanced features
+
+### 3.1 TODO: Scrolling game world / parallax background
+### 3.2 TODO: Screen shake
+### 3.3 TODO: Enemy AI (state-machine)
