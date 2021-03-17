@@ -26,7 +26,7 @@ import pygame
 print(pygame.version.ver)
 ```
 
-You should see output similar to `2.0.0.dev10`.
+You should see output similar to `2.0.1` (or whatever version of the library you happen to be using).
 
 From now on, when we show code-examples, we'll assume that you have `import pygame` at the top of the file, and we'll
 sometimes leave it out (and other imports) for brevity's sake.
